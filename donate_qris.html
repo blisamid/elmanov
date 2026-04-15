@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Infaq Digital | Masjid Al-Hikmah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .bg-pattern { 
+            background-color: #0f172a; 
+            background-image: radial-gradient(#1e293b 1px, transparent 1px); 
+            background-size: 20px 20px; 
+        }
+        /* Menghilangkan spin button pada input number */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+<body class="bg-pattern min-h-screen flex items-center justify-center p-4 md:p-6">
+
+    <div class="bg-white w-full max-w-5xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[500px] md:min-h-[600px] border border-slate-700/50">
+        
+        <div class="w-full md:w-5/12 bg-emerald-600 p-8 md:p-10 text-white flex flex-col justify-between relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-4 md:mb-6 backdrop-blur-md">
+                    <i class="fas fa-mosque text-2xl md:text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-black leading-tight mb-2 uppercase">Masjid<br>Al-Hikmah</h1>
+                <p class="text-emerald-100 text-sm md:text-base font-medium opacity-80">Salurkan amal jariyah Anda dengan aman dan cepat melalui sistem QRIS Digital.</p>
+            </div>
+
+            <div class="relative z-10 grid grid-cols-2 gap-3 mt-6 md:mt-8">
+                <div class="bg-black/10 p-3 md:p-4 rounded-2xl backdrop-blur-sm">
+                    <p class="text-[9px] md:text-[10px] uppercase font-bold text-emerald-200">Total Program</p>
+                    <p class="text-sm md:text-xl font-bold italic">Pembangunan</p>
+                </div>
+                <div class="bg-black/10 p-3 md:p-4 rounded-2xl backdrop-blur-sm">
+                    <p class="text-[9px] md:text-[10px] uppercase font-bold text-emerald-200">Lokasi</p>
+                    <p class="text-sm md:text-xl font-bold italic">Malang, ID</p>
+                </div>
+            </div>
+
+            <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-emerald-500 rounded-full opacity-50"></div>
+        </div>
+
+        <div class="w-full md:w-7/12 p-8 md:p-10 bg-white relative flex flex-col justify-center min-h-[450px]">
+            
+            <div id="paymentArea" class="w-full">
+                <div class="flex items-center justify-between mb-8 md:mb-10">
+                    <h2 class="text-xl md:text-2xl font-black text-slate-800 tracking-tight">Pembayaran QRIS</h2>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" class="h-5 md:h-6">
+                </div>
+
+                <div class="mb-6 md:mb-8">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-3 block">Jumlah Infaq (Rp)</label>
+                    <div class="group relative">
+                        <div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+                            <span class="text-2xl md:text-3xl font-black text-slate-300 group-focus-within:text-emerald-500 transition-colors">Rp</span>
+                        </div>
+                        <input type="number" id="nominalInput" placeholder="0" 
+                               class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl md:rounded-3xl py-4 md:py-6 pl-16 md:pl-20 pr-6 text-3xl md:text-4xl font-black text-slate-800 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all shadow-inner">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 md:gap-3 mb-8 md:mb-10">
+                    <button onclick="setNominal(10000)" class="py-2 md:py-3 px-2 rounded-xl border-2 border-slate-100 font-bold text-xs md:text-base text-slate-500 hover:border-emerald-500 hover:text-emerald-600 transition-all">10.000</button>
+                    <button onclick="setNominal(50000)" class="py-2 md:py-3 px-2 rounded-xl border-2 border-slate-100 font-bold text-xs md:text-base text-slate-500 hover:border-emerald-500 hover:text-emerald-600 transition-all">50.000</button>
+                    <button onclick="setNominal(100000)" class="py-2 md:py-3 px-2 rounded-xl border-2 border-slate-100 font-bold text-xs md:text-base text-slate-500 hover:border-emerald-500 hover:text-emerald-600 transition-all">100.000</button>
+                </div>
+
+                <button onclick="prosesKeSheets()" id="btnBayar" 
+                        class="w-full bg-slate-900 hover:bg-black text-white font-black py-4 md:py-6 rounded-2xl md:rounded-3xl shadow-xl transition-all active:scale-[0.98] tracking-widest text-base md:text-lg">
+                    BAYAR SEKARANG
+                </button>
+                
+                <p class="text-center text-slate-400 text-[10px] md:text-xs mt-6 font-medium italic">
+                    <i class="fas fa-lock mr-1"></i> Transaksi dienkripsi secara aman
+                </p>
+            </div>
+
+            <div id="successOverlay" class="hidden absolute inset-0 bg-white z-20 flex flex-col items-center justify-center p-8 md:p-10 text-center animate-in fade-in duration-500">
+                <div class="w-20 h-20 md:w-24 md:h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-4xl md:text-5xl mb-6 animate-bounce">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 uppercase">Infaq Berhasil!</h2>
+                <p class="text-sm md:text-base text-slate-500 mb-8 md:mb-10">Terima kasih atas kebaikan Anda.<br>Data telah tercatat di sistem.</p>
+                
+                <div class="w-full max-w-xs md:max-w-sm bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl md:rounded-3xl p-5 md:p-6 mb-8 md:mb-10">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Nominal</p>
+                    <p id="displayNominal" class="text-3xl md:text-4xl font-black text-emerald-600">Rp 0</p>
+                </div>
+
+                <button onclick="location.reload()" class="font-black text-emerald-600 hover:underline tracking-widest uppercase text-xs md:text-sm">
+                    Kembali ke Beranda
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){showSuccess();}"></iframe>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgq0Mu2IaFKG4PjGWYEVWImbWm6N5rx2ilN32ahmOD5VHXSOtWTr9bzStW4IxccdWt/exec";
+        let submitted = false;
+
+        function setNominal(val) {
+            document.getElementById('nominalInput').value = val;
+        }
+
+        function prosesKeSheets() {
+            const nominal = document.getElementById('nominalInput').value;
+            const btn = document.getElementById('btnBayar');
+
+            if (!nominal || nominal <= 0) {
+                alert("Masukkan nominal infaq terlebih dahulu.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner animate-spin mr-3"></i> MENGIRIM...';
+
+            const finalURL = `${SCRIPT_URL}?nominal=${encodeURIComponent(nominal)}&metode=QRIS`;
+            
+            submitted = true;
+            document.getElementById('hidden_iframe').src = finalURL;
+        }
+
+        function showSuccess() {
+            if(!submitted) return;
+            const nominal = document.getElementById('nominalInput').value;
+            document.getElementById('displayNominal').innerText = "Rp " + parseInt(nominal).toLocaleString('id-ID');
+            document.getElementById('paymentArea').classList.add('hidden');
+            document.getElementById('successOverlay').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
