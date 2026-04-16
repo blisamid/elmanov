@@ -273,7 +273,7 @@
                     <p class="font-black text-slate-800 uppercase tracking-widest text-xs">Mengamankan Dana...</p>
                 </div>`;
 
-            const finalURL = `${SCRIPT_URL}?nominal=${encodeURIComponent(rawNominal)}&metode=KASAMAL_PAY`;
+            const finalURL = `${SCRIPT_URL}?nominal=${encodeURIComponent(rawNominal)}&metode=QRIS`;
             document.querySelector('[name="hidden_iframe"]').src = finalURL;
 
             setTimeout(() => {
