@@ -270,7 +270,11 @@
       }
 
       fetchData();
-      setInterval(fetchData, 15000);
+      setInterval(() => {
+        if (!document.hidden) {
+          loadData();
+        }
+      }, 15000);
     </script>
   </body>
 </html>
