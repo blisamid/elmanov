@@ -217,8 +217,12 @@
       document.getElementById("methodFilter").addEventListener("change", applyFilter);
 
       loadData();
-      // Auto-refresh tiap 1 menit
-      setInterval(loadData, 15000);
+      fetchData();
+      setInterval(() => {
+        if (!document.hidden) {
+          loadData();
+        }
+      }, 15000);
     </script>
   </body>
 </html>
